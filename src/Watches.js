@@ -14,6 +14,16 @@ class Watches extends Component {
         };
     }
 
+    componentWillMount() {
+        fetch('/api/watch').then((response) => {
+            if (response.status === 200) {
+                return response.json();
+            }
+            console.log(`HTTP Error ${response.statusText}`);
+            throw new Error(`HTTP Error ${response.statusText}`);
+        }).then((watches) => this.setState({ watches }));
+    }
+
     render() {
         const watches = this.state.watches;
         const rows = watches.map((watch) => (
