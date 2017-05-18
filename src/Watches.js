@@ -4,15 +4,29 @@ import Watch from './Watch';
 import './Watches.css';
 
 class Watches extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            watches: [
+                { id: 1, name: 'Swatch classic', price: 500.00, warranty: 1 },
+                { id: 2, name: 'Swatch classic', price: 500.00, warranty: 1 },
+            ],
+        };
+    }
+
     render() {
-        const watch = { id: 1, name: 'Swatch classic', price: 500.00, warranty: 1 };
+        const watches = this.state.watches;
+        const rows = watches.map((watch) => (
+            <Watch
+                key={watch.id}
+                watch={watch}
+            />
+        ));
         return (
             <div
                 className="list"
             >
-                <Watch
-                    watch={watch}
-                />
+                {rows}
             </div>
         );
     }
