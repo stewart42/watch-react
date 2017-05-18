@@ -7,10 +7,8 @@ class Watches extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            watches: [
-                { id: 1, name: 'Swatch classic', price: 500.00, warranty: 1 },
-                { id: 2, name: 'Swatch classic', price: 500.00, warranty: 1 },
-            ],
+            watches: [],
+            filterName: '',
         };
     }
 
@@ -24,8 +22,13 @@ class Watches extends Component {
         }).then((watches) => this.setState({ watches }));
     }
 
+    onChange = (e) => {
+        console.log(e.target.value);
+        this.setState({filterName: e.target.value});
+    }
+
     render() {
-        const watches = this.state.watches;
+        const watches = this.state.watches.filter(watch => watch.name.toLowerCase().startsWith(this.state.filterName.toLowerCase()));
         const rows = watches.map((watch) => (
             <Watch
                 key={watch.id}
@@ -33,10 +36,15 @@ class Watches extends Component {
             />
         ));
         return (
-            <div
-                className="list"
-            >
-                {rows}
+            <div>
+                <div className="filter">
+                    Filter by Name: <input onChange={this.onChange} />
+                </div>
+                <div
+                    className="list"
+                >
+                    {rows}
+                </div>
             </div>
         );
     }
